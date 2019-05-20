@@ -58,4 +58,8 @@ dependencies {
     implementation "org.koin:koin-androidx-scope:$koin_version"
     // Koin AndroidX ViewModel feature
     implementation "org.koin:koin-androidx-viewmodel:$koin_version"
+
+    //paging
+    implementation 'android.arch.paging:runtime:1.0.1'
+    implementation 'android.arch.paging:rxjava2:1.0.1'
 }
