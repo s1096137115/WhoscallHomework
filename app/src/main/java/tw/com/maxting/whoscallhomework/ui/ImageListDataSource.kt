@@ -68,13 +68,13 @@ class ImageListDataSource(
     class Factory(
         private val status: MutableLiveData<ListStatus>,
         private val repository: Repository,
-        private val query: String? = null
+        private val query: MutableLiveData<String>
     ) : DataSource.Factory<Int, Image>() {
 
         private var dataSource: ImageListDataSource? = null
 
         override fun create(): DataSource<Int, Image> {
-            return ImageListDataSource(status, repository, query).also { dataSource = it }
+            return ImageListDataSource(status, repository, query.value).also { dataSource = it }
         }
 
         fun getDataSource() = dataSource

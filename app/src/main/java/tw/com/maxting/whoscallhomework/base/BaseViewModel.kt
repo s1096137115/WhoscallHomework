@@ -18,7 +18,7 @@ abstract class BaseViewModel : ViewModel() {
         mDisposable.clear()
     }
 
-    private fun makePagedListConfig(pageSize: Int = 20, distance: Int = 10): PagedList.Config =
+    private fun makePagedListConfig(pageSize: Int, distance: Int): PagedList.Config =
         PagedList.Config.Builder().apply {
             setPageSize(pageSize) //设置每一页加载的数量
             setInitialLoadSizeHint(pageSize) //设置首次加载的数量
@@ -28,9 +28,11 @@ abstract class BaseViewModel : ViewModel() {
 
     fun <Key, Value> makePagedList(
         dataSourceFactory: DataSource.Factory<Key, Value>,
-        listStatus: MutableLiveData<ListStatus>, pageSize: Int = 20
+        listStatus: MutableLiveData<ListStatus>,
+        pageSize: Int = 50,
+        distance: Int = 10
     ): LiveData<PagedList<Value>> =
-        LivePagedListBuilder<Key, Value>(dataSourceFactory, makePagedListConfig(pageSize))
+        LivePagedListBuilder<Key, Value>(dataSourceFactory, makePagedListConfig(pageSize, distance))
             .setBoundaryCallback(ListBoundaryCallback(listStatus))
             .build()
 

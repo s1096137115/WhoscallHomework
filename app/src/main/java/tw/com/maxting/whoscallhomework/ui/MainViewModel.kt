@@ -18,7 +18,7 @@ class MainViewModel(private val repository: Repository) : BaseViewModel() {
     }
 
     val factory: ImageListDataSource.Factory by lazy {
-        ImageListDataSource.Factory(listStatus, repository, mQuery.value)
+        ImageListDataSource.Factory(listStatus, repository, mQuery)
     }
 
     fun loadImagePaged() = makePagedList(factory, listStatus)
@@ -31,6 +31,7 @@ class MainViewModel(private val repository: Repository) : BaseViewModel() {
 
     fun searchImages(query: String) {
         mQuery.value = query
+        factory.getDataSource()?.invalidate()
     }
 
     fun searchImages(request: SearchImageRequest) {
@@ -42,7 +43,6 @@ class MainViewModel(private val repository: Repository) : BaseViewModel() {
                     mImages.postValue(it.hits)
                 },
                 onError = {
-                    val a = 1
                     //do nothing
                 }
             )
